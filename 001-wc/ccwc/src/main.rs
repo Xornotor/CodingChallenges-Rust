@@ -52,7 +52,7 @@ fn main() {
     // File (if source is not stdin)
     let file: File;
 
-    // 
+    //
     let mut source: Box<dyn BufRead>;
 
     if filepath.as_str() == "" {
@@ -74,12 +74,7 @@ fn main() {
             line_counter += 1;
         }
         if words || no_additional_args {
-            let s: Vec<&str> = contents.split(' ').collect();
-            word_counter += s.len() as u64;
-            if s[s.len()-1] == "\n" || s[s.len()-1] == "\r\n" ||
-               (s.len() == 1 && s[s.len()-1] == "\r\n") {
-                word_counter -= 1;
-            }
+            word_counter += contents.split_whitespace().collect::<Vec<&str>>().len() as u64;
         }
         if chars {
             char_counter += contents.chars().collect::<Vec<char>>().len() as u64;
@@ -109,5 +104,4 @@ fn main() {
     output.push_str(&filepath);
 
     println!("{}", output);
-
 }
